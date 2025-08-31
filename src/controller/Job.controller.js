@@ -2,7 +2,7 @@ import Job from "../model/Job.model.js";
 
 export const addJob = (req, res) => {
     try {
-        const { jobTitle , applicationDate , jobLink , Location , Note , company, position } = req.body;
+        const { jobTitle , applicationDate , jobLink , Location , Note , company, position , status } = req.body;
         if(!jobTitle || !company){
             return res.status(400).json({ message: "Job Title and Company are required." });
         }
@@ -13,7 +13,8 @@ export const addJob = (req, res) => {
             Location,
             Note,
             company,
-            position
+            position,
+            status
         });
         newJob.save()
         .then((job) => res.status(201).json(job))
@@ -55,7 +56,7 @@ export const getJob = (req, res) => {
 export const updateJob = (req, res) => {
   try {
     const { id } = req.params;
-    const { jobTitle , applicationDate , jobLink , Location , Note , company, position } = req.body;
+    const { jobTitle , applicationDate , jobLink , Location , Note , company, position , status } = req.body;
     if(!jobTitle || !company){
       return res.status(400).json({ message: "Job Title and Company are required." });
     }
@@ -66,7 +67,8 @@ export const updateJob = (req, res) => {
       Location,
       Note,
       company,
-      position
+      position,
+      status
     }, { new: true })
     .then((job) => {
       if(!job){

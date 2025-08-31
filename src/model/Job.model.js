@@ -31,6 +31,10 @@ const jobSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    Status: {
+      type: String,
+      default: "Applied",
+    },
   },
   { timestamps: true } // adds createdAt & updatedAt
 );
