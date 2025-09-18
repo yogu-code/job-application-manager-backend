@@ -8,12 +8,18 @@ import cors from 'cors';
 import jobRoutes from './route/Job.route.js';
 
 
+const logger = (req, res, next) => {
+  const now = new Date().toISOString();
+  console.log(`[${now}] ${req.method} ${req.originalUrl}`);
+  next();
+};
 const { json } = pkg;
 dotenv.config(
-    
+  
 );
 connectDB();
 const app = express();
+app.use(logger);
 const PORT = process.env.PORT 
 app.use(
   cors({
