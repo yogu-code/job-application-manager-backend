@@ -19,14 +19,14 @@ dotenv.config(
 );
 connectDB();
 const app = express();
-app.use(logger);
-const PORT = process.env.PORT 
 app.use(
   cors({
     origin: "http://localhost:3000", // your Next.js frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE" , "PATCH"],
   })
 );
+app.use(logger);
+const PORT = process.env.PORT 
 
 app.use(json());
 app.use(bodyParser.urlencoded({ extended: true }));

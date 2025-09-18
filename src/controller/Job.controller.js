@@ -84,11 +84,11 @@ export const updateJob = (req, res) => {
       position,
       status,
     } = req.body;
-    if (!jobTitle || !company) {
-      return res
-        .status(400)
-        .json({ message: "Job Title and Company are required." });
-    }
+    // if (!jobTitle || !company) {
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Job Title and Company are required." });
+    // }
 
     Job.findByIdAndUpdate(
       id,
@@ -134,6 +134,30 @@ export const deleteJob = (req, res) => {
       );
   } catch (error) {
     console.error("Error in deleteJob:", error);
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
+
+export const updateJobStatus = (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    if (!status) {
+      return res.status(400).json({ message: "Status is required." });
+    }
+
+    Job.findByIdAndUpdate(id, { Status: status }, { new: true })  
+      .then((job) => {
+        if (!job) {
+          return res.status(404).json({ message: "Job not found" });
+        }
+        res.status(200).json(job);
+      })
+      .catch((error) =>
+        res.status(500).json({ message: "Error updating job status", error })
+      );
+  } catch (error) {
+    console.error("Error in updateJobStatus:", error);
     res.status(500).json({ message: "Server Error", error });
   }
 };
